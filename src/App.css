@@ -138,6 +138,7 @@ body {
   font-size: larger;
   font-weight: bold;
   outline: none;
+  text-transform: capitalize;
 }
 
 #pokemonFilterTypesContainer {
@@ -199,6 +200,7 @@ body {
   justify-content: center;
   background-color: #ebeaeb;
   border: solid 4px;
+  border-color: var(--typeColor);
   border-radius: 10px;
   transition: transform 0.2s ease-in-out,
               box-shadow 0.2s ease-in-out;
@@ -207,7 +209,7 @@ body {
 
 .pokemonCard:hover {
   transform: scale(1.05);
-  box-shadow: #54546c 0 1px 8px 3px;
+  box-shadow: var(--typeColor) 0 1px 10px 1px;
 }
 
 .pokemonCardHeader {
