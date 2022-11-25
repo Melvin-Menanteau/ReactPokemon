@@ -1,5 +1,4 @@
-import { type } from "@testing-library/user-event/dist/type";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import Header from './Header';
 import PokemonInfo from './PokemonInfo';
 

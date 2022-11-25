@@ -1,8 +1,14 @@
 const Menu = () => {
     return (
         <div id="menu">
-            <a id="menuHome" href="/"></a>
-            <a id="menuPokedex" href="/pokedex"></a>
+            <div id="menuHome" className={"menuItem"}>
+                <div className={"menuIcon"}/>
+                <a href="/">Acceuil</a>
+            </div>
+            <div id="menuPokedex" className={"menuItem"}>
+                <div className={"menuIcon"}/>
+                <a href="/pokedex">Pokedex</a>
+            </div>
         </div>
     )
 };

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import PokemonCard from '../components/pokemon/Card';
 import BaseLayout from '../components/BaseLayout';
 
@@ -96,7 +96,7 @@ const Pokedex = () => {
         <BaseLayout page={
             <div>
                 <div id="pokemonFilterContainer">
-                    <input id="pokemonSearchBar" type="text" placeholder="Chercher Pokémon" onChange={(e) => setPokemonSearch(e.target.value)}/>
+                    <input id="pokemonSearchBar" list="pokemonNamesDatalist" type="text" placeholder="Chercher Pokémon" onChange={(e) => setPokemonSearch(e.target.value)}/>
                     <div id="pokemonFilterTypesContainer">{
                         [...typesData, {name: 'reset'}].map((type) => {
                             return (
@@ -110,7 +110,7 @@ const Pokedex = () => {
                                         borderColor: `var(--${type.name})`
                                     }}
                                     onClick={() => {handlerTypeFilter(type.name)}}
-                                >{type.name === 'reset' ? 'Reset' : ''}</button>
+                                >{type.name === 'reset' ? 'Réinitialiser' : ''}</button>
                             )
                         })
                     }</div>
