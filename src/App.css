@@ -149,18 +149,37 @@ body {
   height: var(--typeFilterButtonSize);
   aspect-ratio: 1 / 1;
   background: none;
-  background-size: contain;
+  background-size: 75%;
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid;
   border-radius: 50%;
   margin: 0px 5px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out,
+              box-shadow 0.2s ease-in-out;
+}
+
+.pokemonTypeFilterButton:not(.reset) {
+  filter: grayscale(1);
+  transition: grayscale 0.2s ease-in-out;
+}
+
+.pokemonTypeFilterButton.reset {
+  aspect-ratio: 2 / 1;
+  border-radius: 10px;
+  color: white;
+  border-color: white;
 }
 
 .pokemonTypeFilterButton:hover {
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.pokemonTypeFilterButton:hover,
+.pokemonTypeFilterButton.active {
+  filter: grayscale(0);
+  box-shadow: 1px 2px 4px 1px #0000005e;
 }
 
 .pokedexContainer {

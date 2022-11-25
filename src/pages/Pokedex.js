@@ -42,7 +42,7 @@ const Pokedex = () => {
                 resolve(data);
             })
             .catch((err) => {
-                console.log(`Pokemon: ${pokemonName} Error: ${err}`);
+                console.error(`Erreur lors de la récupération des données pour le Pokemon: ${pokemonName} (${err})`);
             });
         });
     }
@@ -71,14 +71,12 @@ const Pokedex = () => {
             })
         })
     }
-
-    useEffect(() => {
-        console.log(pokemonsData);
-    }, [pokemonsData])
     
     const handlerTypeFilter = (type) => {
         if (type === 'reset') {
             setTypeFilter([]);
+        } else if (typeFilter.includes(type)) {
+            setTypeFilter(typeFilter.splice(typeFilter.indexOf(type), 1))
         } else {
             setTypeFilter([...typeFilter, type]);
         }
@@ -100,25 +98,21 @@ const Pokedex = () => {
                 <div id="pokemonFilterContainer">
                     <input id="pokemonSearchBar" type="text" placeholder="Chercher Pokémon" onChange={(e) => setPokemonSearch(e.target.value)}/>
                     <div id="pokemonFilterTypesContainer">{
-                        typesData.map((type) => {
+                        [...typesData, {name: 'reset'}].map((type) => {
                             return (
                                 <button
                                     key={type.name}
-                                    className="pokemonTypeFilterButton"
+                                    className={
+                                        `pokemonTypeFilterButton ${type.name === 'reset' ? 'reset' : ''} ${typeFilter.includes(type.name) ? 'active' : ''}`
+                                    }
                                     style={{
                                         backgroundImage: `url(${type.iconURL})`,
                                         borderColor: `var(--${type.name})`
                                     }}
                                     onClick={() => {handlerTypeFilter(type.name)}}
-                                ></button>
+                                >{type.name === 'reset' ? 'Reset' : ''}</button>
                             )
-                        }).push(
-                            <button
-                                key="reset"
-                                className="pokemonTypeFilterButton"
-                                onClick={() => {handlerTypeFilter('reset')}}
-                            ></button>
-                        )
+                        })
                     }</div>
                 </div>
                 <div className="pokedexContainer">{
@@ -127,7 +121,7 @@ const Pokedex = () => {
                                 search.length === 0 ||
                                 pokemon.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
                             ) && (
-                                pokemon.types.some((element) => typeFilter.includes(element.type.name)) ||
+                                typeFilter.every((filteredType) => (pokemon.types.map(({type}) => type.name)).includes(filteredType)) ||
                                 typeFilter.length === 0
                             )
                         );
