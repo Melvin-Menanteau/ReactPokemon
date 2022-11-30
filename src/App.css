@@ -41,7 +41,7 @@
   --menuWidth: 100px;
   --menuMarginRight: 30px;
   --pokedexContainerGap: 50px;
-  --shinyButtonSize: 20px;
+  --shinyButtonSize: 25px;
   --typeFilterButtonSize: 100%;
   --menuIconSize: 50px;
 
@@ -180,6 +180,10 @@ body {
 
 #menuPokedex .menuIcon {
   background-image: url('./resources/pokeball.svg')
+}
+
+#menuFavorite .menuIcon {
+  background-image: url('./resources/favorite-page.svg')
 }
 
 #pokemonFilterContainer {
@@ -394,20 +398,36 @@ body {
   text-transform: capitalize;
 }
 
-.pokemonCardShinyButton {
+.pokemonCardShinyButton,
+.pokemonFavoriteButton {
   position: absolute;
-  top: 5px; 
-  right: 5px;
   width: var(--shinyButtonSize);
   aspect-ratio: 1 / 1;
   border: none;
   background: none;
-  background-image: url('./resources/shiny.svg');
   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pokemonCardShinyButton {
+  top: 5px; 
+  right: 5px;
+  background-image: url('./resources/shiny.svg');
 }
 
 .pokemonCardShinyButton.shiny {
   background-image: url('./resources/shiny-active.svg');
+}
+
+.pokemonFavoriteButton {
+  top: 5px;
+  left: 5px;
+  background-image: url('./resources/favorite.svg');
+}
+
+.pokemonFavoriteButton.favorite {
+  background-image: url('./resources/favorite-active.svg');
 }
 
 .pokemonInfo {

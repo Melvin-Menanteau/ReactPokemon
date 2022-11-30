@@ -1,10 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleShowInfoPokemon } from '../../store/showInfoPokemon';
+import { toggleFavoritePokemon } from '../../store/favPokemonStore';
 import { useState } from "react";
 
 const Header = ({data}) => {
     const dispatch = useDispatch();
     const [showShinySprite, setShowShinySprite] = useState(false);
+
+    const isFavorite = useSelector(state => state.favPokemon.find((pokemon) => pokemon.pokemonID === data.id)?.favorite || false);
 
     const handlerClickCard = (event) => {
         if (!event.target.classList.contains('pokemonCardShinyButton'))
@@ -15,10 +18,15 @@ const Header = ({data}) => {
         setShowShinySprite(!showShinySprite);
     }
 
+    const handlerFavoritePokemon = () => {
+        dispatch(toggleFavoritePokemon(data.id));
+    }
+
     return (
-        <div className="pokemonCardHeader" onClick={(event) => handlerClickCard(event)}>
+        <div className="pokemonCardHeader">
+            <button className={`pokemonFavoriteButton ${isFavorite ? 'favorite' : ''}`} onClick={handlerFavoritePokemon}></button>
             <button className={`pokemonCardShinyButton ${showShinySprite ? 'shiny' : ''}`} onClick={handlerShowShiny}></button>            
-            <img src={showShinySprite ? data.sprites.front_shiny : data.sprites.front_default} alt={data.name}/>
+            <img onClick={(event) => handlerClickCard(event)} src={showShinySprite ? data.sprites.front_shiny : data.sprites.front_default} alt={data.name}/>
             <div className="pokemonName">{data.name}</div>            
         </div>
     )

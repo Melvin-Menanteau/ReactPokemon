@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import PokemonCard from '../components/pokemon/Card';
 import BaseLayout from '../components/BaseLayout';
+import { addPokemon } from '../store/pokemonsData';
 
 const Pokedex = () => {
+    const dispatch = useDispatch();
+
     const [pokemonsData, setPokemonsData] = useState([]);   
     const [search, setPokemonSearch] = useState("");
     const [initOk, setInitOk] = useState(false);
@@ -20,7 +24,8 @@ const Pokedex = () => {
                 Promise.all(data.results.map((pokemon) => {
                     return new Promise((resolve) => {
                         getOnePokemon(pokemon.name).then((data) => {
-                            pkDatas.push(data)
+                            pkDatas.push(data);
+                            dispatch(addPokemon(data));
                             resolve();
                         });
                     });
