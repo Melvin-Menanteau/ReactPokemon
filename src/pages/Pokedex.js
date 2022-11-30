@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import PokemonCard from '../components/pokemon/Card';
 import BaseLayout from '../components/BaseLayout';
 
@@ -76,6 +76,8 @@ const Pokedex = () => {
         if (type === 'reset') {
             setTypeFilter([]);
         } else if (typeFilter.includes(type)) {
+            let temp = typeFilter;
+            temp.splice(typeFilter.indexOf(type), 1);
             setTypeFilter(typeFilter.splice(typeFilter.indexOf(type), 1))
         } else {
             setTypeFilter([...typeFilter, type]);
@@ -110,7 +112,7 @@ const Pokedex = () => {
                                         borderColor: `var(--${type.name})`
                                     }}
                                     onClick={() => {handlerTypeFilter(type.name)}}
-                                >{type.name === 'reset' ? 'Réinitialiser' : ''}</button>
+                                >{type.name === 'reset' ? 'Effacer' : ''}</button>
                             )
                         })
                     }</div>

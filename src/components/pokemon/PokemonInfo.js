@@ -1,6 +1,15 @@
+import { useDispatch } from 'react-redux';
+import { toggleShowInfoPokemon } from '../../store/showInfoPokemon';
+
 const PokemonInfo = ({data}) => {
+    const dispatch = useDispatch();
+
+    const handlerClickCard = () => {
+        dispatch(toggleShowInfoPokemon(data.id));
+    }
+
     return (
-        <div className="pokemonInfo">
+        <div className="pokemonInfo" onClick={() => handlerClickCard()}>
             <div className="pokemonInfoNS">
                 <div className="pokemonName">{data.name}</div>
                 <div className="pokemonInfoType">{

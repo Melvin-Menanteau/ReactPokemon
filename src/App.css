@@ -230,22 +230,123 @@ body {
 }
 
 .pokemonTypeFilterButton.reset {
+  position: relative;
   aspect-ratio: unset;
   width: fit-content;
   height: var(--typeFilterButtonSize);
   border-radius: 10px;
   color: white;
+  font-weight: 900;
   border-color: white;
   border-width: 3px;
   outline: none;
+  transition: padding 0.2s ease-in-out;
+  z-index: 1;
+}
+
+.pokemonTypeFilterButton.reset::before {
+  --borderSize: 4px;
+  content: "";
+  /* border: solid var(--borderSize) red; */
+  border-radius: 6px;
+  width: calc(100%);
+  height: calc(100%);
+  position: absolute;
+  top: calc(var(--borderSize) * 0);
+  left: calc(var(--borderSize) * 0);
+  box-sizing: content-box;
+  background-color: rgb(246, 72, 72);
+  z-index: -1;
+  clip-path: polygon(50% 0, 50% 0, 50% 0, 50% 0, 50% 50%);
+}
+
+.pokemonTypeFilterButton.reset:hover::before {
+  z-index: -1;
+  animation: buttonAnimation 0.2s forwards ease-in-out;
+}
+
+@keyframes buttonAnimation {
+  0% {
+    clip-path: polygon(
+      50% 0,
+      51% 0,
+      51% 0,
+      51% 0,
+      51% 0,
+      51% 0,
+      50% 50%
+    );
+  }
+
+  25% {
+    clip-path: polygon(
+      50% 0,
+      100% 0,
+      100% 0,
+      100% 0,
+      100% 0,
+      100% 0,
+      50% 50%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      50% 0,
+      100% 0,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      50% 50%
+    );
+  }
+
+  75% {
+    clip-path: polygon(
+      50% 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0% 100%,
+      0% 100%,
+      50% 50%
+    );
+  }
+
+  76% {
+    clip-path: polygon(
+      50% 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 100%,
+      0 100%,
+      50% 50%
+    );
+  }
+
+  100% {
+    clip-path: polygon(
+      50% 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 0,
+      50% 0,
+      50% 50%
+    );
+    z-index: -1;
+  }
 }
 
 .pokemonTypeFilterButton:hover {
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   cursor: pointer;
+  /* padding: 0 10px; */
 }
 
-.pokemonTypeFilterButton:hover,
+.pokemonTypeFilterButton:not(.reset):hover,
 .pokemonTypeFilterButton.active {
   filter: grayscale(0);
   box-shadow: 1px 2px 4px 1px #0000005e;
@@ -270,9 +371,9 @@ body {
   border: solid 4px;
   border-color: var(--typeColor);
   border-radius: 10px;
+  user-select: none;
   transition: transform 0.2s ease-in-out,
               box-shadow 0.2s ease-in-out;
-  z-index: 1;
 }
 
 .pokemonCard:hover {
@@ -320,6 +421,7 @@ body {
 
 .pokemonInfo * {
   text-transform: capitalize;
+  font-size: 0.8rem;
 }
 
 .pokemonInfoNS {
