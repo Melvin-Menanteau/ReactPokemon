@@ -1,56 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PokemonCard from '../components/pokemon/Card';
 import BaseLayout from '../components/BaseLayout';
-import { addPokemon } from '../store/pokemonsData';
 
 const Pokedex = () => {
-    const dispatch = useDispatch();
-
-    const [pokemonsData, setPokemonsData] = useState([]);   
+    const pokemons = useSelector(state => state.pokemonsData.pokemons);
     const [search, setPokemonSearch] = useState("");
     const [initOk, setInitOk] = useState(false);
     const [typesData, setTypesData] = useState([]);
     const [typeFilter, setTypeFilter] = useState([]);
-
-    const getAllPokemon = () => {
-        setPokemonsData([]);
-        
-        fetch(`https://pokeapi.co/api/v2/pokemon?limit=300&offset=0`)
-        .then((response) => {
-            response.json().then((data) => {
-                let pkDatas = [];
-
-                Promise.all(data.results.map((pokemon) => {
-                    return new Promise((resolve) => {
-                        getOnePokemon(pokemon.name).then((data) => {
-                            pkDatas.push(data);
-                            dispatch(addPokemon(data));
-                            resolve();
-                        });
-                    });
-                }))
-                .then(() => {
-                    setPokemonsData(pkDatas.sort((a, b) => a.id < b.id ? -1 : 1));
-                })
-            })
-        })
-    }
-
-    const getOnePokemon = (pokemonName) => {
-        return new Promise((resolve, reject) => {
-            fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((err) => {
-                console.error(`Erreur lors de la récupération des données pour le Pokemon: ${pokemonName} (${err})`);
-            });
-        });
-    }
 
     const getAllTypes = () => {
         fetch(`https://pokeapi.co/api/v2/type`)
@@ -82,6 +40,7 @@ const Pokedex = () => {
             setTypeFilter([]);
         } else if (typeFilter.includes(type)) {
             let temp = typeFilter;
+
             temp.splice(typeFilter.indexOf(type), 1);
             setTypeFilter(typeFilter.splice(typeFilter.indexOf(type), 1))
         } else {
@@ -92,7 +51,6 @@ const Pokedex = () => {
     const init = () => {
         if (initOk) return;
 
-        getAllPokemon();
         getAllTypes();
         setInitOk(true);
     }
@@ -123,7 +81,7 @@ const Pokedex = () => {
                     }</div>
                 </div>
                 <div className="pokedexContainer">{
-                    pokemonsData.filter((pokemon) => {
+                    pokemons.filter((pokemon) => {
                         return ((
                                 search.length === 0 ||
                                 pokemon.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())

@@ -356,7 +356,8 @@ body {
   box-shadow: 1px 2px 4px 1px #0000005e;
 }
 
-.pokedexContainer {
+.pokedexContainer,
+.favoritesContainer {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   margin-right: calc(var(--menuMarginRight) * 2);

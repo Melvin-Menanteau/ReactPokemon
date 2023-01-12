@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleShowInfoPokemon } from '../../store/showInfoPokemon';
-import { toggleFavoritePokemon } from '../../store/favPokemonStore';
+import { toggleFavoritePokemon } from '../../store/pokemonsData';
 import { useState } from "react";
 
 const Header = ({data}) => {
     const dispatch = useDispatch();
     const [showShinySprite, setShowShinySprite] = useState(false);
 
-    const isFavorite = useSelector(state => state.favPokemon.find((pokemon) => pokemon.pokemonID === data.id)?.favorite || false);
+    const isFavorite = useSelector(state => state.pokemonsData.favPokemons.find((pokemon) => pokemon.id === data.id)?.favorite || false);
 
     const handlerClickCard = (event) => {
         if (!event.target.classList.contains('pokemonCardShinyButton'))
@@ -19,7 +19,7 @@ const Header = ({data}) => {
     }
 
     const handlerFavoritePokemon = () => {
-        dispatch(toggleFavoritePokemon(data.id));
+        dispatch(toggleFavoritePokemon(data));
     }
 
     return (
